@@ -33,8 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =========================================================
-    // LOGO / BALÓN
-    // Se puede tocar/clickear pero no hace ninguna acción
+    // LOGO / BALON
     // =========================================================
 
     const editionBall =
@@ -74,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (typeof teams === "undefined") {
 
-        console.error("No se encontró teams.js.");
+        console.error("No se encontro teams.js.");
         return;
 
     }
@@ -186,20 +185,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =========================================================
-    // BANDERAS QUE DEBEN SER CUADRADAS
+    // BANDERAS CUADRADAS
     // =========================================================
 
     const squareFlagCodes = [
-        "SUI", // Switzerland
-        "VAT", // Vatican City
-        "AYM", // Aymara
-        "NWS", // Ni-Wakati Sports FC
-        "APT"  // Agro Pontino
+        "SUI",
+        "VAT",
+        "AYM",
+        "NWS",
+        "APT"
     ];
 
 
     // =========================================================
-    // NACIÓN
+    // ACTUALIZAR NACION
     // =========================================================
 
     function updateNation(
@@ -219,7 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             flag.style.display = "block";
 
-            // Quitar formato cuadrado
             flag.classList.remove("square-flag");
 
             code.textContent = "NAT";
@@ -241,10 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        // =====================================================
-        // DETERMINAR SI LA BANDERA ES CUADRADA
-        // =====================================================
 
         if (squareFlagCodes.includes(team.code)) {
 
@@ -271,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =========================================================
-    // BLOQUEAR EQUIPOS
+    // BLOQUEAR EQUIPOS REPETIDOS Y PROHIBIDOS
     // =========================================================
 
     function preventSameTeam() {
@@ -343,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =========================================================
-    // NÚMEROS 0 - 999
+    // NUMEROS 0 - 999
     // =========================================================
 
     function normalizeNumber(
@@ -412,9 +406,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =========================================================
-    // INPUTS NUMÉRICOS
+    // INPUTS NUMERICOS
     // SOLO PERMITE 0 - 9
-    // MÁXIMO 3 DÍGITOS
+    // MAXIMO 3 DIGITOS
     // =========================================================
 
     [
@@ -433,9 +427,6 @@ document.addEventListener("DOMContentLoaded", () => {
         input.autocomplete = "off";
 
 
-        // Bloquear letras, símbolos y cualquier carácter
-        // que no sea un número
-
         input.addEventListener(
             "beforeinput",
             event => {
@@ -452,8 +443,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
-        // Bloquear pegar letras o símbolos
 
         input.addEventListener(
             "paste",
@@ -474,8 +463,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
-        // Seguridad adicional
 
         input.addEventListener(
             "input",
@@ -650,7 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =========================================================
-    // BLOQUEAR PENALES SI NO HAY NACIÓN SELECCIONADA
+    // BLOQUEAR PENALES SIN NACION
     // =========================================================
 
     function updatePenaltyState(
@@ -912,7 +899,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // =========================================================
     // TARJETAS ROJAS
-    // AHORA SE ACTIVAN DESDE LA BANDERA
+    // MAXIMO 5
     // =========================================================
 
     function getCardCount(
@@ -1066,8 +1053,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // =========================================================
     // CLIC EN LA BANDERA
     //
+    // COMPUTADOR:
     // IZQUIERDO = AÑADIR
     // DERECHO = QUITAR
+    //
+    // TELEFONO:
+    // TOQUE = AÑADIR
+    // MANTENER PRESIONADO = QUITAR
     // =========================================================
 
     function setupFlagCards(
@@ -1076,9 +1068,27 @@ document.addEventListener("DOMContentLoaded", () => {
         storageName
     ) {
 
+        let pressTimer = null;
+
+        let longPress = false;
+
+
+        // =====================================================
+        // TOQUE / CLIC NORMAL
+        // =====================================================
+
         flag.addEventListener(
             "click",
             event => {
+
+                if (longPress) {
+
+                    longPress = false;
+
+                    return;
+
+                }
+
 
                 event.preventDefault();
 
@@ -1092,6 +1102,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
+        // =====================================================
+        // CLIC DERECHO EN COMPUTADOR
+        // =====================================================
+
         flag.addEventListener(
             "contextmenu",
             event => {
@@ -1102,6 +1116,93 @@ document.addEventListener("DOMContentLoaded", () => {
                 removeRedCard(
                     container,
                     storageName
+                );
+
+            }
+        );
+
+
+        // =====================================================
+        // MANTENER PRESIONADA EN TELEFONO
+        // =====================================================
+
+        flag.addEventListener(
+            "touchstart",
+            () => {
+
+                longPress = false;
+
+
+                clearTimeout(
+                    pressTimer
+                );
+
+
+                pressTimer =
+                    setTimeout(
+                        () => {
+
+                            longPress = true;
+
+
+                            removeRedCard(
+                                container,
+                                storageName
+                            );
+
+                        },
+                        600
+                    );
+
+            },
+            {
+                passive: true
+            }
+        );
+
+
+        // =====================================================
+        // SOLTAR EL DEDO
+        // =====================================================
+
+        flag.addEventListener(
+            "touchend",
+            () => {
+
+                clearTimeout(
+                    pressTimer
+                );
+
+            }
+        );
+
+
+        // =====================================================
+        // CANCELAR
+        // =====================================================
+
+        flag.addEventListener(
+            "touchcancel",
+            () => {
+
+                clearTimeout(
+                    pressTimer
+                );
+
+            }
+        );
+
+
+        // =====================================================
+        // SI EL DEDO SE MUEVE
+        // =====================================================
+
+        flag.addEventListener(
+            "touchmove",
+            () => {
+
+                clearTimeout(
+                    pressTimer
                 );
 
             }
@@ -1156,7 +1257,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =========================================================
-    // GUARDAR Y RECUPERAR ESTADO DE PENALES
+    // GUARDAR ESTADO DE PENALES
     // =========================================================
 
     if (showPenalties) {
@@ -1416,8 +1517,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =========================================================
-    // PENALES
-    // Recuperar y mostrar el estado guardado
+    // ACTUALIZAR VISIBILIDAD DE PENALES
     // =========================================================
 
     updatePenaltiesVisibility();
