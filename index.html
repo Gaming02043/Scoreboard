@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scoreboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="scoreboard">
+
+        <!-- =========================
+             EQUIPO LOCAL
+             TARJETAS > BANDERA > CÓDIGO
+        ========================== -->
+
+        <section class="team team-home">
+
+            <select id="team1">
+                <option value="">Select a Nation</option>
+            </select>
+
+            <div class="teamInfo homeInfo">
+
+                <div
+                    id="cards1"
+                    class="red-card-container"
+                    aria-label="Home red cards"
+                ></div>
+
+                <img
+                    id="flag1"
+                    src="DefaultNationsFlag.png"
+                    alt="Select a Nation"
+                    class="team-flag"
+                >
+
+                <span id="code1">NAT</span>
+
+            </div>
+
+            <input
+                type="text"
+                id="score1"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="3"
+                value=""
+                aria-label="Home score"
+            >
+
+        </section>
+
+
+        <!-- =========================
+             CENTRO
+        ========================== -->
+
+        <section class="center">
+
+            <button
+                type="button"
+                class="edition"
+                aria-label="Football logo"
+            >
+                ⚽
+            </button>
+
+        </section>
+
+
+        <!-- =========================
+             EQUIPO VISITANTE
+             CÓDIGO > BANDERA > TARJETAS
+        ========================== -->
+
+        <section class="team team-away">
+
+            <select id="team2">
+                <option value="">Select a Nation</option>
+            </select>
+
+            <div class="teamInfo awayInfo">
+
+                <span id="code2">NAT</span>
+
+                <img
+                    id="flag2"
+                    src="DefaultNationsFlag.png"
+                    alt="Select a Nation"
+                    class="team-flag"
+                >
+
+                <div
+                    id="cards2"
+                    class="red-card-container"
+                    aria-label="Away red cards"
+                ></div>
+
+            </div>
+
+            <input
+                type="text"
+                id="score2"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="3"
+                value=""
+                aria-label="Away score"
+            >
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         PENALES
+    ========================== -->
+
+    <div class="penaltyToggle">
+
+        <label>
+
+            <input
+                type="checkbox"
+                id="showPenalties"
+            >
+
+            Show Penalties
+
+        </label>
+
+    </div>
+
+
+    <div
+        id="penalties"
+        class="penalties"
+    >
+
+        <!-- LOCAL: CÓDIGO > MARCADOR -->
+
+        <div class="penaltyTeam">
+
+            <h3 id="penCode1">NAT</h3>
+
+            <input
+                type="text"
+                id="penalty1"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="3"
+                value=""
+                disabled
+                aria-label="Home penalties"
+            >
+
+        </div>
+
+
+        <!-- VISITANTE: MARCADOR > CÓDIGO -->
+
+        <div class="penaltyTeam awayPenalty">
+
+            <input
+                type="text"
+                id="penalty2"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="3"
+                value=""
+                disabled
+                aria-label="Away penalties"
+            >
+
+            <h3 id="penCode2">NAT</h3>
+
+        </div>
+
+    </div>
+
+
+    <script src="teams.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
