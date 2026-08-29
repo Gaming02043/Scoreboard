@@ -1,6 +1,6 @@
 const teams = [
     { name: "Abkhazia", code: "ABK", flag: "https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_Abkhazia.svg" },
-    { name: "Afghanistan", code: "AFG", flag: "https://flagcdn.com/af.svg" },
+    { name: "Afghanistan", code: "AFG", flag: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original" },
     { name: "Agro Pontino", code: "APT", flag: "https://ml4e0gjyxzna.i.optimole.com/cb:uNHV~1ab15/w:189/h:200/q:mauto/f:best/https://www.conifa.org/en/wp-content/uploads/2026/04/Agro-Pontino.png" },
     { name: "Aland Islands", code: "ALA", flag: "https://flagcdn.com/ax.svg" },
     { name: "Albania", code: "ALB", flag: "https://flagcdn.com/al.svg" },
